@@ -1,0 +1,48 @@
+.container {
+    padding: 20px;
+}
+
+h2, h3 {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.table-barang, .table-layanan {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table-barang th, .table-layanan th, 
+.table-barang td, .table-layanan td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-barang th, .table-layanan th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.edit {
+    color: #FFC107;
+    margin-right: 10px;
+}
+
+.hapus {
+    color: #DC3545;
+}
