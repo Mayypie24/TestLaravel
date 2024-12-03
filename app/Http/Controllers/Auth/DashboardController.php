@@ -10,4 +10,6 @@ class DashboardController extends Controller
     {
         return view('dashboard'); // Pastikan file view 'dashboard.blade.php' ada
     }
+
+    
 }

@@ -21,37 +21,41 @@ class LayananController extends Controller
 
     public function store(Request $request)
     {
-        $layanan = new Layanan;
-        $layanan->no = $request->no; // Menyimpan nomor layanan
-        $layanan->nama_layanan = $request->nama_layanan;
-        $layanan->deskripsi_layanan = $request->deskripsi_layanan;
-        $layanan->harga_layanan = $request->harga_layanan;
-        $layanan->durasi_layanan = $request->durasi_layanan;
-        $layanan->save();
-    
-        return redirect()->route('layanan.index');
+        // Validasi data
+        $validatedData = $request->validate([
+            'nama_layanan' => 'required|string|max:255',
+            'deskripsi_layanan' => 'required|string',
+            'harga_layanan' => 'required|numeric',
+            'durasi_layanan' => 'required|integer',
+        ]);
+
+        // Simpan ke database
+        Layanan::create($validatedData);
+
+        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil ditambahkan.');
     }
+    
     
     public function update(Request $request, $id)
-    {
-        $layanan = Layanan::find($id);
-        $layanan->no = $request->no; // Memperbarui nomor layanan
-        $layanan->nama_layanan = $request->nama_layanan;
-        $layanan->deskripsi_layanan = $request->deskripsi_layanan;
-        $layanan->harga_layanan = $request->harga_layanan;
-        $layanan->durasi_layanan = $request->durasi_layanan;
-        $layanan->save();
-    
-        return redirect()->route('layanan.index');
-    }
-    
-    
+{
+    $request->validate([
+        'nama_layanan' => 'required|string|max:255',
+        'deskripsi_layanan' => 'required|string',
+        'harga_layanan' => 'required|numeric',
+        'durasi_layanan' => 'required|integer',
+    ]);
 
-    public function destroy(Layanan $layanan)
-    {
-        $layanan->delete();
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil dihapus.');
-    }
+    $layanan = Layanan::findOrFail($id);
+    $layanan->update([
+        'nama_layanan' => $request->nama_layanan,
+        'deskripsi_layanan' => $request->deskripsi_layanan,
+        'harga_layanan' => $request->harga_layanan,
+        'durasi_layanan' => $request->durasi_layanan,
+    ]);
+
+    return redirect()->route('layanan.index')->with('success', 'Layanan berhasil diperbarui.');
+}
+
     public function edit($id)
 {
     // Temukan layanan berdasarkan ID
@@ -59,6 +63,16 @@ class LayananController extends Controller
 
     // Kembalikan view edit dengan data layanan yang ingin diedit
     return view('layanan.edit', compact('layanan'));
+}
+
+public function destroy($id)
+{
+    // Temukan layanan berdasarkan ID dan hapus
+    $layanan = Layanan::findOrFail($id);
+    $layanan->delete();
+
+    // Redirect ke halaman index layanan dengan pesan sukses
+    return redirect()->route('layanan.index')->with('success', 'Layanan berhasil dihapus.');
 }
 
 }

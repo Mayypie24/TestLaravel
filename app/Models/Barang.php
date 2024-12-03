@@ -9,11 +9,7 @@ class Barang extends Model
 {
     use HasFactory;
 
-
-    // Jika menggunakan nama tabel yang berbeda, tentukan di sini
-    protected $table = 'barang';
-
-    // Daftar field yang dapat diisi melalui mass assignment
+    protected $table = 'barang'; // Nama tabel
     protected $fillable = [
         'id_barang',
         'nama_barang',

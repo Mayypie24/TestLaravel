@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         // Membuat tabel `layanan` baru
-        Schema::table('layanan', function (Blueprint $table) {
+        Schema::create('layanan', function (Blueprint $table) {
             $table->id();
-            $table->integer('no')->nullable()->after('id'); // Menambahkan kolom No setelah kolom id    
             $table->string('nama_layanan');
-            $table->text('deskripsi_layanan')->nullable();
-            $table->integer('harga_layanan');
+            $table->text('deskripsi_layanan');
+            $table->decimal('harga_layanan', 10, 2);
             $table->integer('durasi_layanan');
             $table->timestamps();
         });
+        
     }    
 
     /**

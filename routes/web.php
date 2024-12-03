@@ -3,19 +3,41 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\AkunController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\FonateController;
 
-Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
-Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
-Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::get('/barang/{barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
-Route::put('/barang/{barang}', [BarangController::class, 'update'])->name('barang.update');
+Route::post('/send-message', [FonateController::class, 'sendMessage']);
 
-Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
-Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
-Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
+
+Route::resource('transaksi', TransaksiController::class);
+Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
+Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
+Route::get('/transaksi/cetak/{id}', [TransaksiController::class, 'cetakInvoice'])->name('transaksi.cetak');
+Route::get('/transaksi/daftar', [TransaksiController::class, 'index'])->name('transaksi.index');
+Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
+Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])->name('transaksi.show');
+Route::get('/transaksi/daftar', function () {
+    return 'Halaman transaksi berhasil diakses!';
+});
+
+
+
+Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
+
+
+Route::resource('pelanggan', PelangganController::class);  // Sudah termasuk rute edit dan update
+Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+Route::post('/pelanggan/store', [PelangganController::class, 'store'])->name('pelanggan.store');
 
 // Route default
 Route::get('/', function () {
@@ -29,21 +51,50 @@ Route::post('/login', [LoginController::class, 'login']);
 // Route untuk logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Rute register
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+
+// Middleware untuk route yang memerlukan autentikasi
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
-});
+
+// Rute untuk menampilkan semua barang
+Route::get('barang', [BarangController::class, 'index'])->name('barang.index');
+
+// Rute untuk menampilkan form tambah barang
+Route::get('barang/create', [BarangController::class, 'create'])->name('barang.create');
+
+// Rute untuk menyimpan barang baru
+Route::post('barang', [BarangController::class, 'store'])->name('barang.store');
+
+// Rute untuk menampilkan form edit barang
+Route::get('barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+
+// Rute untuk update barang
+Route::put('barang/{id}', [BarangController::class, 'update'])->name('barang.update');
+
+
+// Rute untuk menghapus barang
+Route::delete('barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
     // Routes untuk Kelola Barang
     Route::resource('barang', BarangController::class);
 
+    // routes/web.php
+Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
+
+Route::put('barang/{barang}', [BarangController::class, 'update'])->name('barang.update');
+
     // Routes untuk Kelola Layanan
     Route::resource('layanan', LayananController::class);
+    Route::post('/layanan/store', [LayananController::class, 'store'])->name('layanan.store');
+});
 
-    Route::get('/layanan/{id}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
 
-// Route di web.php
-Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
-// Route untuk home (jika perlu)
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+
+Route::get('/dashboard', function () {
+    return view('dashboard'); // Pastikan file view bernama 'dashboard.blade.php'
+})->name('dashboard');
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
