@@ -96,5 +96,8 @@ Route::resource('pelanggan', PelangganController::class);
 use App\Http\Controllers\MontirController;
 
 Route::resource('montir', MontirController::class);
+Route::get('/akun', function () {
+    return view('akun.index');
+})->name('akun.index');
 
 

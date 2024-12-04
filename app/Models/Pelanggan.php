@@ -9,14 +9,17 @@ class Pelanggan extends Model
 {
     use HasFactory;
 
-    // Pastikan nama tabel sesuai
-    protected $table = 'pelanggan';
+    // Tentukan nama tabel jika tidak menggunakan nama default yang terbuat dari bentuk jamak
+    protected $table = 'pelanggans';
 
-    // Kolom yang dapat diisi
+    // Tentukan primary key kolom yang digunakan
+    protected $primaryKey = 'id_pelanggan'; // Kolom primary key
+
+    // Tentukan kolom yang dapat diisi (mass assignable)
     protected $fillable = [
         'nama_pelanggan',
-        'email',
-        'telepon',
-        'alamat'
+        'no_tlpon',
+        'alamat_pelanggan',
     ];
 }
+
