@@ -124,6 +124,20 @@
                     ">
                     Kelola Pelanggan
                 </a>
+                <a 
+                href="{{ route('montir.index') }}" 
+                style=" 
+                    color: white;
+                    padding: 10px;
+                    text-decoration: none;
+                    display: block;
+                    margin-bottom: 5px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s;
+                    background-color: {{ request()->routeIs('montir.index') ? '#ccc' : 'transparent' }};
+                ">
+                Kelola Karyawan
+            </a>
             </div>
         </div>
 
@@ -142,10 +156,6 @@
             ">
             <i class="fas fa-credit-card"></i> Transaksi
         </a>
-
-
-
-        <!-- WhatsApp -->
         <a 
             href="https://wa.me/62887435414960?text=Halo%20admin,%20saya%20ingin%20bertanya%20mengenai%20layanan%20bengkel" 
             target="_blank" 
@@ -167,11 +177,6 @@
 
 
 </aside>
-
-
-
-
-    <!-- Main Content -->
     <main 
         style="
             margin-left: 250px;
@@ -220,8 +225,6 @@
             </form>
         </div>
     </main>
-
-    <!-- Footer -->
     <footer 
         style="
             background-color: #007bff;
@@ -238,8 +241,6 @@
         <p style="margin: 0;">&copy; 2024 Bengkel Sinar Baru Motor. Semua hak dilindungi.</p>
     </footer>
 </div>
-
-<!-- JavaScript -->
 <script>
     function toggleSubMenu() {
         const submenu = document.getElementById('submenu');
@@ -247,11 +248,11 @@
         if (submenu.style.display === 'none' || submenu.style.display === '') {
             submenu.style.display = 'block';
             icon.classList.remove('fa-chevron-right');
-            icon.classList.add('fa-chevron-down'); // Ikon berubah ketika submenu terbuka
+            icon.classList.add('fa-chevron-down'); 
         } else {
             submenu.style.display = 'none';
             icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-right'); // Ikon kembali ke kanan ketika submenu ditutup
+            icon.classList.add('fa-chevron-right'); 
         }
     }
 </script>
