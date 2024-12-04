@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\FonateController;
@@ -30,14 +29,6 @@ Route::get('/transaksi/daftar', function () {
     return 'Halaman transaksi berhasil diakses!';
 });
 
-
-
-Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
-
-
-Route::resource('pelanggan', PelangganController::class);  // Sudah termasuk rute edit dan update
-Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
-Route::post('/pelanggan/store', [PelangganController::class, 'store'])->name('pelanggan.store');
 
 // Route default
 Route::get('/', function () {
@@ -98,3 +89,12 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+use App\Http\Controllers\PelangganController;
+
+Route::resource('pelanggan', PelangganController::class);
+use App\Http\Controllers\MontirController;
+
+Route::resource('montir', MontirController::class);
+
+
