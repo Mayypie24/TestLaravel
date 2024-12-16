@@ -7,23 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi extends Model
 {
-    use HasFactory;
-    
+    protected $table = 'transaksi';
 
-    protected $table = 'transaksi'; // Menentukan nama tabel yang benar
-    
     protected $fillable = [
+        'jenis_transaksi',
+        'tanggal_transaksi',
+        'harga_total',
         'id_barang',
-        'nama_barang',
+        'id_layanan',
         'jumlah',
-        'harga_satuan',
-        'total_harga',
     ];
 
-public function barang()
-{
-    return $this->belongsTo(Barang::class);
-}
-
-
+    // Relasi ke model Barang
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'id_barang', 'id');
+    }
+    
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'id_layanan', 'id');
+    }
+    
 }

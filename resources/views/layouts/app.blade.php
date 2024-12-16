@@ -54,6 +54,18 @@
             <i class="fas fa-credit-card"></i> Transaksi
         </a>
 
+                <!-- Laporan -->
+        <div style="margin-bottom: 10px;">
+            <a href="#" onclick="toggleSubMenuLaporan()" style="color: white; padding: 15px; text-decoration: none; display: block; border-radius: 5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                <span><i class="fas fa-chart-line"></i> Laporan</span>
+                <i class="fas fa-chevron-right" id="submenu-laporan-icon"></i>
+            </a>
+            <div id="submenu-laporan" style="display: none; padding-left: 20px;">
+                <a href="{{ route('laporan.keluhan') }}" style="color: white; padding: 10px; text-decoration: none; display: block; margin-bottom: 5px; border-radius: 5px;">Laporan Keluhan</a>
+                <a href="{{ route('laporan.pendapatan') }}" style="color: white; padding: 10px; text-decoration: none; display: block; margin-bottom: 5px; border-radius: 5px;">Laporan Pendapatan</a>
+            </div>
+        </div>
+
         <a href="{{ route('akun.index') }}" style="color: white; padding: 15px; text-decoration: none; display: block; margin-bottom: 10px; border-radius: 5px;">
             <i class="fas fa-user"></i> Akun
         </a>

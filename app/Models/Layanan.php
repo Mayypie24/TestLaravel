@@ -19,4 +19,7 @@ class Layanan extends Model
         'harga_layanan',
         'durasi_layanan',
     ];
+
+    
 }
+

@@ -10,24 +10,23 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\FonateController;
+use App\Http\Controllers\LaporanController;
+
+Route::get('/laporan/keluhan', [LaporanController::class, 'keluhan'])->name('laporan.keluhan');
+Route::get('/laporan/pendapatan', [LaporanController::class, 'pendapatan'])->name('laporan.pendapatan');
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::post('/send-message', [FonateController::class, 'sendMessage']);
 
-
+Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
 Route::resource('transaksi', TransaksiController::class);
 Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
+// Route untuk menyimpan data transaksi
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
-Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
-Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
-Route::get('/transaksi/cetak/{id}', [TransaksiController::class, 'cetakInvoice'])->name('transaksi.cetak');
-Route::get('/transaksi/daftar', [TransaksiController::class, 'index'])->name('transaksi.index');
 Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
-Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])->name('transaksi.show');
-Route::get('/transaksi/daftar', function () {
-    return 'Halaman transaksi berhasil diakses!';
-});
+
 
 
 // Route default
