@@ -15,6 +15,7 @@ class Layanan extends Model
     // Tentukan atribut yang bisa diisi massal
     protected $fillable = [
         'nama_layanan',
+        'harga',
         'deskripsi_layanan',
         'harga_layanan',
         'durasi_layanan',

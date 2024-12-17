@@ -97,6 +97,15 @@
             @endforelse
         </tbody>
     </table>
+
+    <!-- Lihat Barang Terbaik - Dipindah ke bawah tabel -->
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="{{ route('barang.tpk') }}" 
+            class="btn btn-info" 
+            style="padding: 12px 24px; font-size: 18px; border-radius: 5px;">
+            Lihat Barang Terbaik
+        </a>
+    </div>
 </div>
 
 <!-- Sidebar -->
@@ -138,13 +147,11 @@
             </div>
         </div>
 
-                <!-- Menambahkan menu Transaksi -->
-                <a href="{{ route('transaksi.index') }}" 
-                style="color: white; padding: 15px; text-decoration: none; display: block; margin-bottom: 10px; border-radius: 5px; transition: background-color 0.3s;">
-                <i class="fas fa-credit-card"></i> Transaksi
-            </a>
-            
-
+        <!-- Menambahkan menu Transaksi -->
+        <a href="{{ route('transaksi.index') }}" 
+            style="color: white; padding: 15px; text-decoration: none; display: block; margin-bottom: 10px; border-radius: 5px; transition: background-color 0.3s;">
+            <i class="fas fa-credit-card"></i> Transaksi
+        </a>
     </nav>
 </aside>
 
@@ -201,5 +208,12 @@ function openDeleteModal(id, name) {
 function closeDeleteModal() {
     document.getElementById('deleteModal').style.display = 'none';
 }
+
+function formatRupiah(element) {
+    let angka = element.value.replace(/\./g, ''); // Hapus semua titik
+    let formatted = parseInt(angka).toLocaleString('id-ID'); // Format ulang
+    element.value = formatted;
+}
+
 </script>
 @endsection

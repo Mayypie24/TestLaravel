@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dyAB/sPrsCu0iZZ3Q9IrAB+niIcxJ5ShRxhXfp2w1/kJH+a5LpeT90GmUe56smFgDyIl2vZ4fqNDO9lH22omcw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>@yield('title')</title>
 
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
     <script>
         function togglePassword(inputId, element) {
             const inputField = document.getElementById(inputId);

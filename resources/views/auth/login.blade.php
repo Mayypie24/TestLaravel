@@ -3,132 +3,211 @@
 @section('content')
 <div class="container">
     <style>
-        /* Styling untuk halaman login */
-        .container {
-            margin-top: 50px;
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .login-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .card-header {
-            font-size: 24px;
-            font-weight: bold;
+        .login-logo {
+            flex: 1;
+            background: linear-gradient(135deg, #1A73E8, #61B0FF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
             text-align: center;
-            background-color: #007bff;
-            color: white;
-            border-bottom: none;
         }
 
-        .card-body {
-            padding: 30px;
+        .login-logo img {
+            width: 300px; /* Logo diperbesar */
+            height: auto;
         }
 
-        form .form-control {
+        .login-form {
+            flex: 2;
+            padding: 60px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .login-header p {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            font-size: 15px;
         }
 
-        form .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        .form-control:focus {
+            border-color: #1A73E8;
+            box-shadow: 0 0 8px rgba(26, 115, 232, 0.3);
+            outline: none;
         }
 
         .btn-primary {
-            border-radius: 10px;
-            background-color: #007bff;
+            width: 100%;
+            padding: 15px;
+            background-color: #1A73E8;
             border: none;
-            transition: background-color 0.3s;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
+            background-color: #145DBF;
         }
 
-        .btn-link {
-            color: #007bff;
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-footer a {
+            color: #1A73E8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-footer a:hover {
             text-decoration: underline;
-            font-size: 14px;
         }
 
-        .btn-link:hover {
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .footer a {
+            color: #1A73E8;
             text-decoration: none;
         }
 
-        .row {
-            margin-bottom: 15px;
+        .footer a:hover {
+            text-decoration: underline;
         }
 
-        .login-banner {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        @media (max-width: 992px) {
+            .login-wrapper {
+                flex-direction: column;
+            }
 
-        .login-banner img {
-            width: 100px;
-            height: auto;
-            margin-bottom: 10px;
-        }
+            .login-logo {
+                padding: 40px;
+            }
 
-        .login-banner h1 {
-            font-size: 28px;
-            font-weight: bold;
-            color: #007bff;
+            .login-form {
+                padding: 40px;
+            }
         }
     </style>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="login-banner">
-                <img src="{{ asset('images/logo-sinar-baru-motor.jpg') }}" alt="Logo Bengkel">
-                <h1>Login Sistem Informasi Bengkel</h1>
-                <p>Silahkan Login</p>
+    <!-- Wrapper -->
+    <div class="login-wrapper">
+        <!-- Logo -->
+        <div class="login-logo">
+            <img src="{{ asset('images/logo-sinar-baru-motor-removebg-preview.png') }}" alt="Logo Bengkel">
+        </div>
+
+        <!-- Form -->
+        <div class="login-form">
+            <div class="login-header">
+                <h1>Login Sistem</h1>
+                <p>Selamat datang di Sistem Informasi Bengkel Motor</p>
             </div>
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
 
-                        <!-- Email -->
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" required autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Password -->
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Login Button -->
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                                @if (Route::has('register'))
-                                    <a class="btn btn-link" href="{{ route('register') }}">Daftar Akun</a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                <!-- Email Input -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
+                           name="email" placeholder="Masukkan Email Anda" required autofocus>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
+                <!-- Password Input -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
+                           name="password" placeholder="Masukkan Password Anda" required>
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <!-- Register Link -->
+            <div class="login-footer">
+                @if (Route::has('register'))
+                    <p>Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang</a></p>
+                @endif
             </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Bengkel Sinar Baru Motor. All Rights Reserved. | <a href="#">Kebijakan Privasi</a></p>
     </div>
 </div>
 @endsection

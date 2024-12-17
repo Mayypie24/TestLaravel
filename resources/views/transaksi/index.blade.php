@@ -8,35 +8,52 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                
                 <th>Jenis Transaksi</th>
                 <th>Detail</th>
                 <th>Harga Total</th>
                 <th>Tanggal</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach($transaksi as $trx)
             <tr>
-                
                 <td>{{ $trx->jenis_transaksi }}</td>
                 <td>
                     @if($trx->jenis_transaksi === 'barang' && $trx->barang)
-                        Barang: {{ $trx->barang->nama_barang }} ({{ $trx->jumlah }})
+                        Barang: {{ $trx->barang->nama_barang }} <br>
+                        Harga Satuan: Rp {{ number_format($trx->barang->harga, 0, ',', '.') }} <br>
+                        Jumlah: {{ $trx->jumlah }}
                     @elseif($trx->jenis_transaksi === 'layanan' && $trx->layanan)
-                        Layanan: {{ $trx->layanan->nama_layanan }}
+                        Layanan: {{ $trx->layanan->nama_layanan }} <br>
+                        Harga: Rp {{ number_format($trx->layanan->harga, 0, ',', '.') }}
                     @else
                         Tidak ada detail
                     @endif
                 </td>
-                <td>{{ number_format($trx->harga_total, 0, ',', '.') }}</td>
+                <td>
+                    @if($trx->jenis_transaksi === 'barang' && $trx->barang)
+                        {{ number_format($trx->barang->harga * $trx->jumlah, 0, ',', '.') }}
+                    @elseif($trx->jenis_transaksi === 'layanan' && $trx->layanan)
+                        {{ number_format($trx->layanan->harga, 0, ',', '.') }}
+                    @else
+                        0
+                    @endif
+                </td>
                 <td>{{ $trx->tanggal_transaksi }}</td>
+                <td>
+                    <a href="{{ route('transaksi.print', $trx->id) }}" class="btn btn-success btn-sm" target="_blank">
+                        <i class="fas fa-print"></i> Cetak
+                    </a>
+                </td>
             </tr>
             @endforeach
         </tbody>
         
     </table>
 </div>
+
+
 
 </script>
 
@@ -87,20 +104,22 @@
 
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Sistem Bengkel</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="https://wa.me/62887435414960?text=Halo%20admin,%20saya%20ingin%20bertanya" target="_blank" class="btn btn-success">
-                        Hubungi via WhatsApp
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<a 
+href="https://wa.me/62887435414960?text=Halo%20admin,%20saya%20ingin%20bertanya%20mengenai%20layanan%20bengkel" 
+target="_blank" 
+style=" 
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    display: block;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s;
+    background-color: #25d366;
+">
+<i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+</a>
 
 </aside>
 @endsection

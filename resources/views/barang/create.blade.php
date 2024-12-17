@@ -52,13 +52,16 @@
                         <input type="number" class="form-control" id="stok_barang" name="stok_barang" placeholder="Masukkan Stok Barang" required>
                     </div>
 
-                    <!-- Harga Barang -->
-                    <div class="form-group mb-3">
-                        <label for="harga_barang" class="form-label">
-                            <i class="fas fa-money-bill"></i> Harga Barang
-                        </label>
-                        <input type="number" class="form-control" id="harga_barang" name="harga_barang" placeholder="Masukkan Harga Barang" required>
-                    </div>
+<!-- Harga Barang -->
+<div class="form-group mb-3">
+    <label for="harga_barang" class="form-label">
+        <i class="fas fa-money-bill"></i> Harga Barang
+    </label>
+    <input type="text" class="form-control" id="harga_barang" name="harga_barang" 
+        placeholder="Masukkan Harga Barang (contoh: 55.000)" required 
+        onkeyup="formatRupiah(this)">
+</div>
+
 
                     <!-- Kualitas Barang -->
                     <div class="form-group mb-4">

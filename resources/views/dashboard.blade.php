@@ -42,136 +42,139 @@
 
     <!-- Menu -->
     <nav>
-        <!-- Dashboard -->
-        <a 
-            href="{{ route('dashboard.index') }}" 
-            style=" 
-                color: white;
-                padding: 15px;
-                text-decoration: none;
-                display: block;
-                margin-bottom: 10px;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-                background-color: {{ request()->routeIs('dashboard.index') ? '#007bff' : 'transparent' }};
-            ">
-            <i class="fas fa-home"></i> Dashboard
-        </a>
+<!-- Dashboard -->
+<a 
+    href="{{ route('dashboard.index') }}" 
+    style=" 
+        color: white;
+        padding: 15px;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        background-color: {{ request()->routeIs('dashboard.index') ? '#007bff' : 'transparent' }};
+    ">
+    <i class="fas fa-tachometer-alt"></i> Dashboard
+</a>
 
-        <!-- Master Data -->
-        <div style="margin-bottom: 10px;">
-            <a 
-                href="#" 
-                onclick="toggleSubMenu()" 
-                style=" 
-                    color: white;
-                    padding: 15px;
-                    text-decoration: none;
-                    display: block;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    background-color: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? '#007bff' : 'transparent' }};
-                ">
-                <span>
-                    <i class="fas fa-folder"></i> Master Data
-                </span>
-                <i class="fas {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'fa-chevron-down' : 'fa-chevron-right' }}" id="submenu-icon"></i>
-            </a>
-            <div id="submenu" style="display: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'block' : 'none' }}; padding-left: 20px;">
-                <a 
-                    href="{{ route('barang.index') }}" 
-                    style=" 
-                        color: white;
-                        padding: 10px;
-                        text-decoration: none;
-                        display: block;
-                        margin-bottom: 5px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s;
-                        background-color: {{ request()->routeIs('barang.index') ? '#ccc' : 'transparent' }};
-                    ">
-                    Kelola Barang
-                </a>
-                <a 
-                    href="{{ route('layanan.index') }}" 
-                    style=" 
-                        color: white;
-                        padding: 10px;
-                        text-decoration: none;
-                        display: block;
-                        margin-bottom: 5px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s;
-                        background-color: {{ request()->routeIs('layanan.index') ? '#ccc' : 'transparent' }};
-                    ">
-                    Kelola Layanan
-                </a>
-                <a 
-                    href="{{ route('pelanggan.index') }}" 
-                    style=" 
-                        color: white;
-                        padding: 10px;
-                        text-decoration: none;
-                        display: block;
-                        margin-bottom: 5px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s;
-                        background-color: {{ request()->routeIs('pelanggan.index') ? '#ccc' : 'transparent' }};
-                    ">
-                    Kelola Pelanggan
-                </a>
-                <a 
-                href="{{ route('montir.index') }}" 
-                style=" 
-                    color: white;
-                    padding: 10px;
-                    text-decoration: none;
-                    display: block;
-                    margin-bottom: 5px;
-                    border-radius: 5px;
-                    transition: background-color 0.3s;
-                    background-color: {{ request()->routeIs('montir.index') ? '#ccc' : 'transparent' }};
-                ">
-                Kelola Karyawan
-            </a>
-            </div>
-        </div>
+<!-- Master Data -->
+<div style="margin-bottom: 10px;">
+    <a 
+        href="#" 
+        onclick="toggleSubMenu()" 
+        style=" 
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? '#007bff' : 'transparent' }};
+        ">
+        <span>
+            <i class="fas fa-database"></i> Master Data
+        </span>
+        <i class="fas {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'fa-chevron-down' : 'fa-chevron-right' }}" id="submenu-icon"></i>
+    </a>
+    <div id="submenu" style="display: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'block' : 'none' }}; padding-left: 20px;">
+        <a 
+            href="{{ route('barang.index') }}" 
+            style=" 
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+                margin-bottom: 5px;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+                background-color: {{ request()->routeIs('barang.index') ? '#ccc' : 'transparent' }};
+            ">
+            <i class="fas fa-box"></i> Kelola Barang
+        </a>
+        <a 
+            href="{{ route('layanan.index') }}" 
+            style=" 
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+                margin-bottom: 5px;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+                background-color: {{ request()->routeIs('layanan.index') ? '#ccc' : 'transparent' }};
+            ">
+            <i class="fas fa-cogs"></i> Kelola Layanan
+        </a>
+        <a 
+            href="{{ route('pelanggan.index') }}" 
+            style=" 
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+                margin-bottom: 5px;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+                background-color: {{ request()->routeIs('pelanggan.index') ? '#ccc' : 'transparent' }};
+            ">
+            <i class="fas fa-users"></i> Kelola Pelanggan
+        </a>
+        <a 
+            href="{{ route('montir.index') }}" 
+            style=" 
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+                margin-bottom: 5px;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+                background-color: {{ request()->routeIs('montir.index') ? '#ccc' : 'transparent' }};
+            ">
+            <i class="fas fa-user-cog"></i> Kelola Karyawan
+        </a>
+    </div>
+</div>
 
-        <!-- Transaksi -->
-        <a 
-            href="{{ route('transaksi.index') }}" 
-            style=" 
-                color: white;
-                padding: 15px;
-                text-decoration: none;
-                display: block;
-                margin-bottom: 10px;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-                background-color: {{ request()->routeIs('transaksi.index') ? '#007bff' : 'transparent' }};
-            ">
-            <i class="fas fa-credit-card"></i> Transaksi
-        </a>
-        <a 
-            href="https://wa.me/62887435414960?text=Halo%20admin,%20saya%20ingin%20bertanya%20mengenai%20layanan%20bengkel" 
-            target="_blank" 
-            style=" 
-                color: white;
-                padding: 15px;
-                text-decoration: none;
-                display: block;
-                margin-top: 20px;
-                border-radius: 5px;
-                text-align: center;
-                transition: background-color 0.3s;
-                background-color: #25d366;
-            ">
-            <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
-        </a>
+<!-- Transaksi -->
+<a 
+    href="{{ route('transaksi.index') }}" 
+    style=" 
+        color: white;
+        padding: 15px;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        background-color: {{ request()->routeIs('transaksi.index') ? '#007bff' : 'transparent' }};
+    ">
+    <i class="fas fa-shopping-cart"></i> Transaksi
+</a>
+
+<!-- Hubungi via WhatsApp -->
+<a 
+    href="https://wa.me/62887435414960?text=Halo%20admin,%20saya%20ingin%20bertanya%20mengenai%20layanan%20bengkel" 
+    target="_blank" 
+    style=" 
+        color: white;
+        padding: 15px;
+        text-decoration: none;
+        display: block;
+        margin-top: 20px;
+        border-radius: 5px;
+        text-align: center;
+        transition: background-color 0.3s;
+        background-color: #25d366;
+    ">
+    <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+</a>
+
     </nav>
 </aside>
 

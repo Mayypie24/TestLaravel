@@ -11,6 +11,14 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\FonateController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\TPKController;
+
+
+Route::get('/tpk', [TPKController::class, 'index'])->name('tpk.index');
+Route::get('/tpk/form', [TPKController::class, 'form'])->name('tpk.form');
+Route::post('/tpk/store-barang', [TPKController::class, 'storeBarang'])->name('tpk.storeBarang');
+Route::post('/tpk/store-kriteria', [TPKController::class, 'storeKriteria'])->name('tpk.storeKriteria');
+
 
 Route::get('/laporan/keluhan', [LaporanController::class, 'keluhan'])->name('laporan.keluhan');
 Route::get('/laporan/pendapatan', [LaporanController::class, 'pendapatan'])->name('laporan.pendapatan');
@@ -26,6 +34,7 @@ Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('t
 // Route untuk menyimpan data transaksi
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
+Route::get('/transaksi/print/{id}', [TransaksiController::class, 'print'])->name('transaksi.print');
 
 
 
@@ -51,31 +60,23 @@ Route::middleware('auth')->group(function () {
 
 // Rute untuk menampilkan semua barang
 Route::get('barang', [BarangController::class, 'index'])->name('barang.index');
-
 // Rute untuk menampilkan form tambah barang
 Route::get('barang/create', [BarangController::class, 'create'])->name('barang.create');
-
 // Rute untuk menyimpan barang baru
 Route::post('barang', [BarangController::class, 'store'])->name('barang.store');
-
 // Rute untuk menampilkan form edit barang
 Route::get('barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
-
 // Rute untuk update barang
 Route::put('barang/{id}', [BarangController::class, 'update'])->name('barang.update');
-
-
 // Rute untuk menghapus barang
 Route::delete('barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+    // routes/web.php
+Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
+Route::put('barang/{barang}', [BarangController::class, 'update'])->name('barang.update');
+Route::get('/barang/tpk', [BarangController::class, 'tpk'])->name('barang.tpk');
 
     // Routes untuk Kelola Barang
     Route::resource('barang', BarangController::class);
-
-    // routes/web.php
-Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
-
-Route::put('barang/{barang}', [BarangController::class, 'update'])->name('barang.update');
-
     // Routes untuk Kelola Layanan
     Route::resource('layanan', LayananController::class);
     Route::post('/layanan/store', [LayananController::class, 'store'])->name('layanan.store');
