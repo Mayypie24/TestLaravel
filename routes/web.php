@@ -35,7 +35,7 @@ Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('t
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::get('/transaksi/print/{id}', [TransaksiController::class, 'print'])->name('transaksi.print');
-
+Route::get('/get-harga/{id}', [TransaksiController::class, 'getHarga']);
 
 
 // Route default

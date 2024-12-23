@@ -13,20 +13,16 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_transaksi');
+            $table->string('jenis_transaksi'); // 'barang' atau 'layanan'
+            $table->foreignId('id_barang')->nullable()->constrained('barang');
+            $table->foreignId('id_layanan')->nullable()->constrained('layanan');
+            $table->decimal('harga_satuan', 15, 2);
+            $table->integer('jumlah');
+            $table->decimal('harga_total', 15, 2);
             $table->date('tanggal_transaksi');
-            $table->decimal('harga_total', 10, 2);
-            $table->unsignedBigInteger('id_barang')->nullable();
-            $table->unsignedBigInteger('id_layanan')->nullable();
-            $table->integer('jumlah')->nullable();
             $table->timestamps();
-        
-            $table->foreign('id_barang')->references('id')->on('barang')->onDelete('cascade');
-            $table->foreign('id_layanan')->references('id')->on('layanan')->onDelete('cascade');
         });
-        
-        
-        
+
     }
 
     /**
