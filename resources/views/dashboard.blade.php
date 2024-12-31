@@ -23,7 +23,7 @@
                 margin-bottom: 20px;
             ">
             <img 
-                src="{{ asset('images/logo-sinar-baru-motor_2-removebg-preview.png') }}" 
+                src="{{ asset('img/logo-sinar-baru-motor__2_-removebg-preview.png') }}" 
                 alt="Logo Bengkel" 
                 style="
                     width: 100px;
