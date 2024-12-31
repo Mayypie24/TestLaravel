@@ -1,75 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Daftar Transaksi</h1>
+<div class="container" style="margin-top: 40px;">
 
-    <!-- Tombol untuk menambah transaksi -->
-    <a href="{{ route('transaksi.create') }}" class="btn btn-primary mb-3">Tambah Transaksi</a>
-
-    <!-- Menampilkan pesan sukses jika ada -->
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
 
-    <!-- Tabel untuk menampilkan transaksi Barang -->
-    <h3>Transaksi Barang</h3>
+    <h1 class="mb-4">Daftar Karyawan Bengkel Sinar Baru Motor</h1>
+
+    <div class="mb-4">
+        <a href="{{ route('karyawan.create') }}" class="btn btn-primary">Tambah Karyawan</a>
+    </div>
+
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Jenis Barang</th>
-                <th>Nama Barang</th>
-                <th>Harga Satuan</th>
-                <th>Jumlah</th>
-                <th>Harga Total</th>
+                <th>Nama Karyawan</th>
+                <th>No Telepon</th>
+                <th>Alamat</th>
+                <th>Gaji Karyawan</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($transaksiBarang as $transaksi)
+            @foreach ($karyawan as $k)
                 <tr>
-                    <td>{{ $transaksi->jenis_transaksi }}</td>
-                    <td>{{ $transaksi->barang ? $transaksi->barang->nama_barang : 'Barang tidak ditemukan' }}</td>
-                    <td>{{ number_format($transaksi->harga_satuan, 0, ',', '.') }}</td>
-                    <td>{{ $transaksi->jumlah }}</td>
-                    <td>{{ number_format($transaksi->harga_total, 0, ',', '.') }}</td>
+                    <td>{{ $k->nama_karyawan }}</td>
+                    <td>{{ $k->no_telepon }}</td>
+                    <td>{{ $k->alamat }}</td>
+                    <td>Rp {{ number_format($k->gaji, 0, ',', '.') }}</td>
                     <td>
-                        <!-- Tombol untuk Cetak -->
-                        <a href="#" class="btn btn-success btn-sm" onclick="printTransaction({{ $transaksi->id }})">Cetak</a>
+                        <a href="{{ route('karyawan.edit', $k->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <!-- Tabel untuk menampilkan transaksi Layanan -->
-    <h3>Transaksi Layanan</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Jenis Layanan</th>
-                <th>Nama Layanan</th>
-                <th>Harga Satuan</th>
-                <th>Jumlah</th>
-                <th>Harga Total</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($transaksiLayanan as $transaksi)
-                <tr>
-                    <td>{{ $transaksi->jenis_transaksi }}</td>
-                    <td>{{ $transaksi->layanan ? $transaksi->layanan->nama_layanan : 'Layanan tidak ditemukan' }}</td>
-                    <td>{{ number_format($transaksi->harga_satuan, 0, ',', '.') }}</td>
-                    <td>{{ $transaksi->jumlah }}</td>
-                    <td>{{ number_format($transaksi->harga_total, 0, ',', '.') }}</td>
-                    <td>
-                        <!-- Tombol untuk Cetak -->
-                        <a href="#" class="btn btn-success btn-sm" onclick="printTransaction({{ $transaksi->id }})">Cetak</a>
-
+                        <form action="{{ route('karyawan.destroy', $k->id) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
@@ -77,39 +47,9 @@
     </table>
 </div>
 
-<script>
-function printTransaction(transaksiId) {
-    var printUrl = "{{ route('transaksi.cetak', '') }}/" + transaksiId;
-    console.log(printUrl);  // Cek apakah URL yang dihasilkan benar
-    var printWindow = window.open(printUrl, "_blank");
-
-    printWindow.onload = function() {
-        printWindow.print();
-    };
-}
-
-function toggleSubMenu() {
-    var submenu = document.getElementById("submenu");
-    var icon = document.getElementById("submenu-icon");
-    
-    // Jika submenu tidak ditampilkan, tampilkan submenu dan ubah ikon
-    if (submenu.style.display === "none" || submenu.style.display === "") {
-        submenu.style.display = "block";
-        icon.classList.remove("fa-chevron-right");
-        icon.classList.add("fa-chevron-down");
-    } else {
-        submenu.style.display = "none";
-        icon.classList.remove("fa-chevron-down");
-        icon.classList.add("fa-chevron-right");
-    }
-}
-
-
-</script>
-
 <!-- Sidebar -->
 <aside 
-    style="
+    style=" 
         width: 250px;
         background-color: #343a40;
         color: white;
@@ -120,10 +60,7 @@ function toggleSubMenu() {
         top: 0;
         left: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        z-index: 1050;
-        pointer-events: auto; /* Menambahkan pointer-events */
     ">
-
 
     <!-- Logo -->
     <div 
@@ -143,7 +80,7 @@ function toggleSubMenu() {
         <!-- Dashboard -->
         <a 
             href="{{ route('dashboard.index') }}" 
-            style="
+            style=" 
                 color: white;
                 padding: 15px;
                 text-decoration: none;
@@ -160,7 +97,7 @@ function toggleSubMenu() {
             <a 
                 href="#" 
                 onclick="toggleSubMenu()" 
-                style="
+                style=" 
                     color: white;
                     padding: 15px;
                     text-decoration: none;
@@ -178,11 +115,10 @@ function toggleSubMenu() {
                 <i class="fas {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'fa-chevron-down' : 'fa-chevron-right' }}" id="submenu-icon"></i>
             </a>
             <div id="submenu" 
-            style="display: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'block' : 'none' }}; padding-left: 20px; z-index: 1060;">
-        
+                style="display: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'block' : 'none' }}; padding-left: 20px;">
                 <a 
                     href="{{ route('barang.index') }}" 
-                    style="
+                    style=" 
                         color: white;
                         padding: 10px;
                         text-decoration: none;
@@ -212,7 +148,7 @@ function toggleSubMenu() {
         <!-- Daftar Pelanggan -->
         <a 
             href="{{ route('pelanggan.index') }}" 
-            style="
+            style=" 
                 color: white;
                 padding: 15px;
                 text-decoration: none;
@@ -268,9 +204,26 @@ function toggleSubMenu() {
                 background-color: {{ request()->routeIs('laporan-pendapatan.index') ? '#007bff' : 'transparent' }};">
             <i class="fas fa-chart-line"></i> Laporan Pendapatan
         </a>
-
-        
     </nav>
 </aside>
 
+<script>
+    function toggleSubMenu() {
+    var submenu = document.getElementById("submenu");
+    var icon = document.getElementById("submenu-icon");
+    
+    // Jika submenu tidak ditampilkan, tampilkan submenu dan ubah ikon
+    if (submenu.style.display === "none" || submenu.style.display === "") {
+        submenu.style.display = "block";
+        icon.classList.remove("fa-chevron-right");
+        icon.classList.add("fa-chevron-down");
+    } else {
+        submenu.style.display = "none";
+        icon.classList.remove("fa-chevron-down");
+        icon.classList.add("fa-chevron-right");
+    }
+}
+
+
+</script>
 @endsection

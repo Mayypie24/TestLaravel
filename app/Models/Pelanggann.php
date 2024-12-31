@@ -17,9 +17,13 @@ class Pelanggan extends Model
 
     // Tentukan kolom yang dapat diisi (mass assignable)
     protected $fillable = [
+        'plat_da',           // Menambahkan plat_da ke kolom yang bisa diisi
         'nama_pelanggan',
         'no_tlpon',
-        'alamat_pelanggan',
     ];
+
+    // Tentukan kolom yang tidak boleh diisi (guarded) jika ada
+    // protected $guarded = ['id_pelanggan']; // Opsional jika ingin melindungi kolom tertentu
 }
+
 

@@ -2,93 +2,62 @@
 
 @section('content')
 <div class="container">
-    <h1>Daftar Transaksi</h1>
+    <h1>Laporan Pendapatan</h1>
 
-    <!-- Tombol untuk menambah transaksi -->
-    <a href="{{ route('transaksi.create') }}" class="btn btn-primary mb-3">Tambah Transaksi</a>
-
-    <!-- Menampilkan pesan sukses jika ada -->
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    <!-- Form untuk memilih rentang tanggal -->
+    <form action="{{ route('laporan-pendapatan.index') }}" method="GET" class="mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="start_date">Tanggal Mulai</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ $startDate->format('Y-m-d') }}">
+            </div>
+            <div class="col-md-4">
+                <label for="end_date">Tanggal Selesai</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ $endDate->format('Y-m-d') }}">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Tampilkan</button>
+            </div>
         </div>
-    @endif
+    </form>
 
-    <!-- Tabel untuk menampilkan transaksi Barang -->
-    <h3>Transaksi Barang</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Jenis Barang</th>
-                <th>Nama Barang</th>
-                <th>Harga Satuan</th>
-                <th>Jumlah</th>
-                <th>Harga Total</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($transaksiBarang as $transaksi)
+    <!-- Tabel untuk menampilkan transaksi, diberi kelas printable -->
+    <div class="printable">
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>{{ $transaksi->jenis_transaksi }}</td>
-                    <td>{{ $transaksi->barang ? $transaksi->barang->nama_barang : 'Barang tidak ditemukan' }}</td>
-                    <td>{{ number_format($transaksi->harga_satuan, 0, ',', '.') }}</td>
-                    <td>{{ $transaksi->jumlah }}</td>
-                    <td>{{ number_format($transaksi->harga_total, 0, ',', '.') }}</td>
-                    <td>
-                        <!-- Tombol untuk Cetak -->
-                        <a href="#" class="btn btn-success btn-sm" onclick="printTransaction({{ $transaksi->id }})">Cetak</a>
-
-                    </td>
+                    <th>Jenis Transaksi</th>
+                    <th>Nama Barang / Layanan</th>
+                    <th>Harga Satuan</th>
+                    <th>Jumlah</th>
+                    <th>Harga Total</th>
+                    <th>Tanggal</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($transaksi as $item)
+                    <tr>
+                        <td>{{ $item->jenis_transaksi }}</td>
+                        <td>{{ $item->barang ? $item->barang->nama_barang : $item->layanan->nama_layanan }}</td>
+                        <td>{{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
+                        <td>{{ $item->jumlah }}</td>
+                        <td>{{ number_format($item->harga_total, 0, ',', '.') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <!-- Tabel untuk menampilkan transaksi Layanan -->
-    <h3>Transaksi Layanan</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Jenis Layanan</th>
-                <th>Nama Layanan</th>
-                <th>Harga Satuan</th>
-                <th>Jumlah</th>
-                <th>Harga Total</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($transaksiLayanan as $transaksi)
-                <tr>
-                    <td>{{ $transaksi->jenis_transaksi }}</td>
-                    <td>{{ $transaksi->layanan ? $transaksi->layanan->nama_layanan : 'Layanan tidak ditemukan' }}</td>
-                    <td>{{ number_format($transaksi->harga_satuan, 0, ',', '.') }}</td>
-                    <td>{{ $transaksi->jumlah }}</td>
-                    <td>{{ number_format($transaksi->harga_total, 0, ',', '.') }}</td>
-                    <td>
-                        <!-- Tombol untuk Cetak -->
-                        <a href="#" class="btn btn-success btn-sm" onclick="printTransaction({{ $transaksi->id }})">Cetak</a>
+        <!-- Total Pendapatan, ditambahkan di dalam elemen printable -->
+        <div style="text-align: right;">
+            <h3>Total Pendapatan: {{ number_format($totalPendapatan, 0, ',', '.') }}</h3>
+        </div>
+    </div>
 
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+
 
 <script>
-function printTransaction(transaksiId) {
-    var printUrl = "{{ route('transaksi.cetak', '') }}/" + transaksiId;
-    console.log(printUrl);  // Cek apakah URL yang dihasilkan benar
-    var printWindow = window.open(printUrl, "_blank");
-
-    printWindow.onload = function() {
-        printWindow.print();
-    };
-}
-
-function toggleSubMenu() {
+    function toggleSubMenu() {
     var submenu = document.getElementById("submenu");
     var icon = document.getElementById("submenu-icon");
     
@@ -120,10 +89,7 @@ function toggleSubMenu() {
         top: 0;
         left: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        z-index: 1050;
-        pointer-events: auto; /* Menambahkan pointer-events */
     ">
-
 
     <!-- Logo -->
     <div 
@@ -178,8 +144,7 @@ function toggleSubMenu() {
                 <i class="fas {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'fa-chevron-down' : 'fa-chevron-right' }}" id="submenu-icon"></i>
             </a>
             <div id="submenu" 
-            style="display: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'block' : 'none' }}; padding-left: 20px; z-index: 1060;">
-        
+                style="display: {{ request()->is('barang*') || request()->is('layanan*') || request()->is('pelanggan*') ? 'block' : 'none' }}; padding-left: 20px;">
                 <a 
                     href="{{ route('barang.index') }}" 
                     style="
@@ -195,7 +160,7 @@ function toggleSubMenu() {
                 </a>
                 <a 
                     href="{{ route('layanan.index') }}" 
-                    style=" 
+                    style="
                         color: white;
                         padding: 10px;
                         text-decoration: none;
@@ -227,7 +192,7 @@ function toggleSubMenu() {
         <!-- Data Karyawan -->
         <a 
             href="{{ route('karyawan.index') }}" 
-            style=" 
+            style="
                 color: white;
                 padding: 15px;
                 text-decoration: none;
@@ -242,7 +207,7 @@ function toggleSubMenu() {
         <!-- Transaksi -->
         <a 
             href="{{ route('transaksi.index') }}" 
-            style=" 
+            style="
                 color: white;
                 padding: 15px;
                 text-decoration: none;
@@ -257,7 +222,7 @@ function toggleSubMenu() {
         <!-- Laporan Pendapatan -->
         <a 
             href="{{ route('laporan-pendapatan.index') }}" 
-            style=" 
+            style="
                 color: white;
                 padding: 15px;
                 text-decoration: none;
@@ -268,9 +233,8 @@ function toggleSubMenu() {
                 background-color: {{ request()->routeIs('laporan-pendapatan.index') ? '#007bff' : 'transparent' }};">
             <i class="fas fa-chart-line"></i> Laporan Pendapatan
         </a>
-
-        
     </nav>
 </aside>
+
 
 @endsection

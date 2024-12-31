@@ -12,6 +12,23 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\FonateController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\TPKController;
+use App\Http\Controllers\LaporanPendapatanController;
+use App\Http\Controllers\PelangganController;
+
+use App\Http\Controllers\KaryawanController;
+
+Route::resource('karyawan', KaryawanController::class);
+Route::put('/karyawan/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+Route::get('karyawan/{karyawan}/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
+Route::put('karyawan/{karyawan}', [KaryawanController::class, 'update'])->name('karyawan.update');
+
+
+Route::resource('pelanggan', PelangganController::class);
+Route::get('pelanggan/{pelanggan}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
+
+Route::get('/laporan-pendapatan', [LaporanPendapatanController::class, 'index'])->name('laporan-pendapatan.index');
+
 
 
 Route::get('/tpk', [TPKController::class, 'index'])->name('tpk.index');
@@ -28,14 +45,16 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::post('/send-message', [FonateController::class, 'sendMessage']);
 
+Route::get('/get-harga/{id}', [TransaksiController::class, 'getHargaBarang']);
+Route::get('/get-harga-layanan/{id}', [TransaksiController::class, 'getHargaLayanan']);
 Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
 Route::resource('transaksi', TransaksiController::class);
 Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
 // Route untuk menyimpan data transaksi
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
-Route::get('/transaksi/print/{id}', [TransaksiController::class, 'print'])->name('transaksi.print');
-Route::get('/get-harga/{id}', [TransaksiController::class, 'getHarga']);
+Route::get('transaksi/{id}/cetak', [TransaksiController::class, 'cetak'])->name('transaksi.cetak');
+Route::get('/transaksi/cetak/{id}', [TransaksiController::class, 'cetak'])->name('transaksi.cetak');
 
 
 // Route default
@@ -58,6 +77,9 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
+    Route::get('/get-harga/{id}', [BarangController::class, 'getHarga']);
+    Route::get('/get-harga-layanan/{id}', [LayananController::class, 'getHarga']);
+    
 // Rute untuk menampilkan semua barang
 Route::get('barang', [BarangController::class, 'index'])->name('barang.index');
 // Rute untuk menampilkan form tambah barang
@@ -90,12 +112,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-use App\Http\Controllers\PelangganController;
-
-Route::resource('pelanggan', PelangganController::class);
-use App\Http\Controllers\MontirController;
-
-Route::resource('montir', MontirController::class);
 Route::get('/akun', function () {
     return view('akun.index');
 })->name('akun.index');

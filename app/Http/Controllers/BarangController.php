@@ -99,8 +99,17 @@ public function show($id)
         // Redirect dengan pesan sukses
         return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
     }
+
+    public function getHarga($id)
+    {
+        $barang = Barang::find($id);
     
+        if ($barang) {
+            return response()->json(['harga_satuan' => $barang->harga]);
+        }
     
+        return response()->json(['message' => 'Barang tidak ditemukan'], 404);
+    }
     
 
     // Tampilkan form edit barang

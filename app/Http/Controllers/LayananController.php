@@ -65,6 +65,17 @@ class LayananController extends Controller
     return view('layanan.edit', compact('layanan'));
 }
 
+public function getHarga($id)
+{
+    $layanan = Layanan::find($id);
+
+    if ($layanan) {
+        return response()->json(['harga' => $layanan->harga]);
+    }
+
+    return response()->json(['message' => 'Layanan tidak ditemukan'], 404);
+}
+
 public function destroy($id)
 {
     // Temukan layanan berdasarkan ID dan hapus
